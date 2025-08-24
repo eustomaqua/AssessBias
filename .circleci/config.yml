@@ -27,9 +27,9 @@ jobs:
             coverage html
             # rm *.png && rm *.csv && rm *.log
             coverage xml
-            export CODACY_PROJECT_TOKEN=e5364f1287c94650b2575c849d47c40a
-            export CODECOV_TOKEN=c7609124-b53c-4019-a893-cec9f98cfe97
-            export COVERALLS_REPO_TOKEN=vVh9U1eIjWuYcPfvpPaNif7kL8rJA6iRZ
+            export CODACY_PROJECT_TOKEN=f9e9619d28d24ab78f9f39e25a7650c7
+            export CODECOV_TOKEN=076f3576-adf2-431b-a02a-9b2a6dc32d82
+            export COVERALLS_REPO_TOKEN=ZiMX3Qa3hMaTJZOJHhUmrOxwH3wSmdiRw
             bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml
             # bash <(curl -Ls https://coverage.codacy.com/get.sh)
             # python -m pytest fairml/facils/excl_test*
