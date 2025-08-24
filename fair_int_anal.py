@@ -9,14 +9,15 @@ from pyfair.utils_empirical import GraphSetup, GRP_FAIR_COMMON
 from pyfair.facil.utils_const import unique_column, DTY_FLT
 
 from pyfair.granite.draw_addtl import (
-    multi_lin_reg_with_distr, single_line_reg_with_distr,
-    multi_lin_reg_without_distr,
+    # multi_lin_reg_with_distr, single_line_reg_with_distr,
+    # multi_lin_reg_without_distr,
+    single_line_reg_with_distr, multi_lin_reg_without_distr,
     scatter_with_marginal_distrib, lineplot_with_uncertainty,
     line_reg_with_marginal_distr)
 from pyfair.granite.draw_fancy import (
-    boxplot_rect, multi_boxplot_rect, radar_chart)
+    multi_boxplot_rect, radar_chart)  # boxplot_rect,
 from pyfair.granite.draw_chart import (
-    analogous_confusion_extended, multiple_scatter_chart)
+    analogous_confusion_extended)  # ,multiple_scatter_chart)
 
 
 # -----------------------------
@@ -215,9 +216,9 @@ class PlotA_initial(GraphSetup):
             return
 
         for i, tg in enumerate(tag_grp):
-            data = [df[tg].values.astype(DTY_FLT),
-                    df[tag_ext[i]].values.astype(DTY_FLT),
-                    df[tag_ext_alt[i]].values.astype(DTY_FLT)]
+            # data = [df[tg].values.astype(DTY_FLT),
+            #         df[tag_ext[i]].values.astype(DTY_FLT),
+            #         df[tag_ext_alt[i]].values.astype(DTY_FLT)]
             fgn = '{}_{}'.format(
                 figname, f'grp{i+1}' if i < 3 else f'hfm{i+3}')
             # boxplot_rect(data, labels, fgn + '_prim')
@@ -819,7 +820,7 @@ class PlotA_fair_ens(PlotA_initial):
         lbl_C = [self._dal_metric[i] for i in pick]
         lbl_B_bin = annotZs + [r'$\mathbf{df}_\text{prev}$',
                                r'$\hat{\mathbf{df}}_\text{prev}$']
-        Mat_B_bin = df[key_B_bin].values.astype(DTY_FLT).T
+        # Mat_B_bin = df[key_B_bin].values.astype(DTY_FLT).T
         Mat_B_ext = df[key_B_nonbin].values.astype(DTY_FLT).T
         Mat_B_extalt = df[key_B_extalt].values.astype(DTY_FLT).T 
         kws = {'cmap_name': 'Blues', 'rotate': 65}

@@ -2,7 +2,7 @@
 # Experiments
 
 
-import pdb
+# import pdb
 import time
 import numpy as np
 
@@ -19,13 +19,13 @@ from pyfair.facil.utils_const import DTY_FLT, unique_column
 
 from pyfair.dr_hfm.discriminative_risk import hat_L_fair, hat_L_loss
 from pyfair.dr_hfm.dist_drt import (
-    DirectDist_bin, DirectDist_nonbin, DirectDist_multiver)
+    DirectDist_bin, DirectDist_multiver)  # DirectDist_nonbin,
 from pyfair.dr_hfm.dist_est_bin import (
-    ApproxDist_bin, ApproxDist_bin_alter)
+    ApproxDist_bin_alter)    # ApproxDist_bin,
 from pyfair.dr_hfm.dist_est_nonbin import (
-    ApproxDist_nonbin_mpver, ExtendDist_multiver_mp)
+    ExtendDist_multiver_mp)  # ApproxDist_nonbin_mpver,
 from pyfair.dr_hfm.hfm_df import (
-    bias_degree, bias_degree_bin, bias_degree_nonbin)
+    bias_degree_bin, bias_degree_nonbin)  # bias_degree,
 
 from pyfair.marble.metric_fair import (
     unpriv_group_one, unpriv_group_two, unpriv_group_thr,

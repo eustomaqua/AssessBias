@@ -3,7 +3,7 @@
 
 
 import argparse
-import pdb
+# import pdb
 
 import csv
 import json
@@ -13,9 +13,9 @@ import time
 import warnings
 
 import sklearn
-import pandas as pd
 import numpy as np
 # import numba
+# import pandas as pd
 from pathos import multiprocessing as pp
 
 
@@ -268,7 +268,9 @@ class FairNonbinaryEmpirical(DataSetup):
         if "mCV" in self._trial_type:
             split_idx = manual_cross_valid(self._nb_cv, y)
         elif "KFS" in self._trial_type:
-            split_idx = sklearn_stratify(self._nb_cv, y, X)
+            # pdb.set_trace()             # same outcomes
+            # split_idx = sklearn_stratify(self._nb_cv, y, XA)
+            split_idx = sklearn_stratify(self._nb_cv, y, X4learn)
         elif "KF" in self._trial_type:
             split_idx = sklearn_k_fold_cv(self._nb_cv, y)
         else:
