@@ -2,7 +2,6 @@
 
 
 import os
-import pdb
 import pandas as pd
 import numpy as np
 
@@ -467,7 +466,6 @@ class PlotA_initial(GraphSetup):
 
         # fgn = f'{figname}_df_tim'
         # self.sub_draw_idv_df(df, tim_df, tim_df_pl, tag_X, X, fgn, kws)
-        # pdb.set_trace()
         return
 
     # def sub_draw_idv_bin(self, df, tag_X, tag_Ys, figname):
@@ -545,7 +543,6 @@ class PlotA_fair_ens(PlotA_initial):
         tmp = tag_sa1[-3:]
         df_nonbin['extAlt'] = df_nonbin[tmp[0]] + df_nonbin[
             tmp[1]] + df_nonbin[tmp[2]] + df_nonbin['extGrp']
-        # pdb.set_trace()
         pick = [0, 4, 5]  # 1,2,3,] # ,6,7]
         col_grp = tag_sa1[:3] + [tag_sa1[16 + 3], tag_sa1[27 + 3]]
         col_ext = tag_sa1[4:10][:3] + [tag_sa1[16 + 7], tag_sa1[27 + 7]]
@@ -639,7 +636,6 @@ class PlotA_fair_ens(PlotA_initial):
             col_ext_alt + tag_sa1[10:13],
             # f'{figname}_avg_scat', verbose)
             f'{figname}_scat_avg', verbose)
-        # pdb.set_trace()
         fgn = f'{figname}_radar_avg'  # f'{figname}_avg_radar'
         for pkc in [0, 1, 2, 6, 10]:
             for pks in [2, 3, 4]:
@@ -719,7 +715,6 @@ class PlotA_fair_ens(PlotA_initial):
         annotY = ['ori', 'ext', 'alt', 'ext (avg)', 'alt (avg)']
         radar_chart(df_tmp, currX, labels, annotY,
                     figname=f'{fgn}_s{pick_set}c{pick_clf}')
-        # pdb.set_trace()
         return
 
     def avg_draw_extended_grp_scat(self, df, tag_grp, tag_ext,
@@ -780,7 +775,6 @@ class PlotA_fair_ens(PlotA_initial):
         #                    figname=f'{figname}_dim2', annotX=lbl_dim2)
         # multi_boxplot_rect(df, tag_grp, tag_ext[:5], tag_ext_alt[:5],
         #                    figname=f'{figname}_dim3', annotX=lbl_dim2)
-        # pdb.set_trace()
         return
 
     def avg_draw_trade_off(self, df, pick, tag_X, tag_Ys, figname,

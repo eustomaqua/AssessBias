@@ -2,8 +2,12 @@
 __pycache__/
 *.py[codz]
 *$py.class
+
 *.DS_Store
 *.pdf
+pyfair/
+data/
+
 
 # C extensions
 *.so
