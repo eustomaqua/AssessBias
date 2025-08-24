@@ -9,9 +9,9 @@ from pyfair.utils_empirical import GraphSetup, GRP_FAIR_COMMON
 from pyfair.facil.utils_const import unique_column, DTY_FLT
 
 from pyfair.granite.draw_addtl import (
+    single_line_reg_with_distr, multi_lin_reg_without_distr,
     # multi_lin_reg_with_distr, single_line_reg_with_distr,
     # multi_lin_reg_without_distr,
-    single_line_reg_with_distr, multi_lin_reg_without_distr,
     scatter_with_marginal_distrib, lineplot_with_uncertainty,
     line_reg_with_marginal_distr)
 from pyfair.granite.draw_fancy import (
@@ -813,7 +813,7 @@ class PlotA_fair_ens(PlotA_initial):
 
         key_A = [tag_X[:8][i] for i in pick]
         key_C = [tag_X[8:16][i] for i in pick]
-        key_B_bin = tag_Ys[0][:3] + tag_X[-3:] + tag_Ys[0][-2:]
+        # key_B_bin = tag_Ys[0][:3] + tag_X[-3:] + tag_Ys[0][-2:]
         key_B_nonbin = tag_Ys[1][:3] + tag_X[-3:] + tag_Ys[1][-2:]
         key_B_extalt = tag_Ys[2][:3] + tag_X[-3:] + tag_Ys[2][-2:]
         lbl_A = [self._perf_metric[i] for i in pick]
