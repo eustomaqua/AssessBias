@@ -1,7 +1,7 @@
 # AssessBias
 
-![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
 <!--
+![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
 [![Documentation Status](https://readthedocs.org/projects/assessbias/badge/?version=latest)](https://assessbias.readthedocs.io/en/latest/?badge=latest)
 -->
 
@@ -14,16 +14,16 @@ Welcome to the AssessBias's documentation. This is to help you reproduce our wor
 
 ## Getting started
 
-### Requirements
-
 We developed [AssessBias](https://github.com/eustomaqua/AssessBias) primarily with ``Python 3.8``, but plotted figures with ``Python 3.11``. Remember to install anaconda/miniconda first, and then choose the corresponding environment.
+
+### Environment(s)
 
 ```shell
 $ # To obtain the empirical data
 $ conda create -n py38 python=3.8
 $ source activate py38
 $ pip install --upgrade pip
-$ pip install -r requirements.txt
+$ pip install -r reqs_py38.txt
 $ # conda deactivate
 $ # conda remove -n py38 --all
 ```
@@ -32,7 +32,7 @@ $ # To obtain the plotted figures
 $ conda create -n py311 python=3.11
 $ source activate py311
 $ pip install -U pip
-$ pip install -r reqs_dev.txt
+$ pip install -r requirements.txt
 $ # conda deactivate
 $ # conda remove -n py311 --all
 ```

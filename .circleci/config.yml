@@ -25,7 +25,8 @@ jobs:
             # coverage run -m pytest --ignore-glob="*/excl_test_*,*/*excl.py,*/pkgs*"
             git clone git@github.com:eustomaqua/PyFairness.git
             cp -r ./PyFairness/pyfair ./
-            coverage run -m pytest test_fair_int.py
+            coverage run -m pytest --ignore-glob="pyfair/*"
+            # coverage run -m pytest test_fair_int.py
             coverage report
             coverage html
             # rm *.png && rm *.csv && rm *.log
