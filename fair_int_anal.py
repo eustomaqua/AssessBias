@@ -2,6 +2,7 @@
 
 
 import os
+# import pdb
 import pandas as pd
 import numpy as np
 
@@ -385,7 +386,7 @@ class PlotA_initial(GraphSetup):
             r'$\hat{\mathbf{df}}^\text{avg}$']
         Mat_B_bin = df[key_B_bin].values.astype(DTY_FLT).T
         Mat_B_ext = df[key_B_nonbin].values.astype(DTY_FLT).T
-        Mat_B_extalt = df[key_B_extalt].values.astype(DTY_FLT).T 
+        Mat_B_extalt = df[key_B_extalt].values.astype(DTY_FLT).T
         kws = {'cmap_name': 'Blues', 'rotate': 65}
         # analogous_confusion_extended(
         #     df[key_A].values.astype(DTY_FLT).T, Mat_B_bin, lbl_A,
@@ -714,6 +715,7 @@ class PlotA_fair_ens(PlotA_initial):
         for i, j in zip(sub_grp, sub_ext_alt_avg):
             df_tmp.loc[4, i] = float(df_tmp_tmp[j].mean())
         annotY = ['ori', 'ext', 'alt', 'ext (avg)', 'alt (avg)']
+        # pdb.set_trace()
         radar_chart(df_tmp, currX, labels, annotY,
                     figname=f'{fgn}_s{pick_set}c{pick_clf}')
         return

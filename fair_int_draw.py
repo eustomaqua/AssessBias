@@ -151,6 +151,6 @@ if __name__ == "__main__":
     case.trial_one_process()  # mode=mode)
 
 
-"""
-python fair_int_draw.py -exp KF_exp1b
-"""
+# """
+# python fair_int_draw.py -exp KF_exp1b
+# """

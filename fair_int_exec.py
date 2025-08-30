@@ -256,10 +256,10 @@ class FairNonbinaryEmpirical(DataSetup):
             tmp_cls, '', handling_info[
                 'perturbation_tim_elapsed']], [
             '', self._prep, '', '', '', '',
-             'mp#core ={}'.format(
-                 self._mp_cores),  # 'sen-att', '', ''],
+             'mp#core ={}'.format(self._mp_cores
+                                  ),  # 'sen-att', '', ''],
             '', f'abbr_cls,nb_cls={self._nb_cls}',
-             '', 'perturbation'],
+            '', 'perturbation'],
             sen_att, self._dataset.privileged_vals,
             handling_info['marginalised_grps'], ]
 
@@ -448,9 +448,9 @@ if __name__ == "__main__":
     case.trial_one_process(mode=mode)
 
 
-"""
-python fair_int_exec.py -exp KF_exp1a -nk 2 -clf AdaBoost -dat ppvr
-python fair_int_exec.py -exp KF_exp1a -nk 2 -clf AdaBoost
-python fair_int_exec.py -exp KF_exp1b -nk 2 -dat ricci -pre min_max
-python fair_int_exec.py -exp KF_exp1c -nk 2 -dat ricci
-"""
+# """
+# python fair_int_exec.py -exp KF_exp1a -nk 2 -clf AdaBoost -dat ppvr
+# python fair_int_exec.py -exp KF_exp1a -nk 2 -clf AdaBoost
+# python fair_int_exec.py -exp KF_exp1b -nk 2 -dat ricci -pre min_max
+# python fair_int_exec.py -exp KF_exp1c -nk 2 -dat ricci
+# """

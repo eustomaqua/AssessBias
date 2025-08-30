@@ -182,8 +182,8 @@ class ComparisonA_setup:
 
     # def subproc_part4_hfm(self, X_breve, A, y, y_hat,
     #                       g1m_indices, m1, m2, n_e, pool):
+    #     pass
     def subproc_part4_hfm(self, X_nA_y, X_nA_fx, g1m_indices):
-        pass
         n_a, ans = len(g1m_indices), []
         for i in range(n_a):
             (Ds, _), t_Ds = DirectDist_bin(X_nA_y, g1m_indices[i][0])
