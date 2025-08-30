@@ -11,10 +11,8 @@ from pyfair.facil.utils_const import unique_column, DTY_FLT
 
 from pyfair.granite.draw_addtl import (
     single_line_reg_with_distr, multi_lin_reg_without_distr,
-    # multi_lin_reg_with_distr, single_line_reg_with_distr,
-    # multi_lin_reg_without_distr,
     scatter_with_marginal_distrib, lineplot_with_uncertainty,
-    line_reg_with_marginal_distr)
+    line_reg_with_marginal_distr)  # multi_lin_reg_with_distr,
 from pyfair.granite.draw_fancy import (
     multi_boxplot_rect, radar_chart)  # boxplot_rect,
 from pyfair.granite.draw_chart import (
