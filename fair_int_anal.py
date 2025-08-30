@@ -913,7 +913,7 @@ class PlotA_fair_ens(PlotA_initial):
         return
 
     def avg_draw_incompatible_alt(self, df, tag_X, tag_Ys,
-                                  figname):
+                                  figname, verbose=False):
         annotZs = GRP_FAIR_COMMON + [
             r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
         # ta, ra = f"{'':<5}", f"{'':>5}"
@@ -1013,6 +1013,8 @@ class PlotA_fair_ens(PlotA_initial):
             line_reg_with_marginal_distr(
                 df, pi, 'Fairness', grp3, lbl_g3, annotX=lbl_drt[k],
                 annotY=lbl_g3[0], figname=f'{fgn}_g3d', **kws)
+            if not verbose:
+                continue
             line_reg_with_marginal_distr(
                 df, pj, 'Fairness', grp1, lbl_g1, annotX=lbl_app[k],
                 annotY=lbl_g1[0], figname=f'{fgn}_g1a', **kws)

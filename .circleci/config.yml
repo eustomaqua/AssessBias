@@ -22,10 +22,14 @@ jobs:
             pip install -r requirements.txt
             pip install carbontracker pytest
             pip install coverage coveralls pytest-xdist
-            coverage run -m pytest --ignore-glob="*/excl_test_*,*/*excl.py,*/pkgs*"
+            # coverage run -m pytest --ignore-glob="*/excl_test_*,*/*excl.py,*/pkgs*"
+            git clone git@github.com:eustomaqua/PyFairness.git
+            cp -r ./PyFairness/pyfair ./
+            coverage run -m pytest test_fair_int.py
             coverage report
             coverage html
             # rm *.png && rm *.csv && rm *.log
+            rm -r pyfair exp1b*.pdf
             coverage xml
             export CODACY_PROJECT_TOKEN=f9e9619d28d24ab78f9f39e25a7650c7
             export CODECOV_TOKEN=076f3576-adf2-431b-a02a-9b2a6dc32d82

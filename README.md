@@ -1,12 +1,20 @@
 # AssessBias
 
+![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
+<!--
+[![Documentation Status](https://readthedocs.org/projects/assessbias/badge/?version=latest)](https://assessbias.readthedocs.io/en/latest/?badge=latest)
+-->
+
+
 Welcome to the AssessBias's documentation. This is to help you reproduce our work from
 
 1. Algorithmic fairness: Not a purely technical but socio-technical property
 2. Do existing fairness measures suffice? Assessing discrimination in algorithmic decision-making
 
 
-## Requirements
+## Getting started
+
+### Requirements
 
 We developed [AssessBias](https://github.com/eustomaqua/AssessBias) primarily with ``Python 3.8``, but plotted figures with ``Python 3.11``. Remember to install anaconda/miniconda first, and then choose the corresponding environment.
 
@@ -19,7 +27,6 @@ $ pip install -r requirements.txt
 $ # conda deactivate
 $ # conda remove -n py38 --all
 ```
-
 ```shell
 $ # To obtain the plotted figures
 $ conda create -n py311 python=3.11
@@ -46,7 +53,7 @@ $ # rm -r pyfair data
 $ yes | rm -r PyFairness
 ```
 
-## Reproduction
+### Reproduction
 
 To reproduce our empirical results, you may use the [released data](https://github.com/eustomaqua/AssessBias/tree/master/findings) and do as follows.
 
@@ -55,6 +62,8 @@ $ # source activate py311
 $ python fair_int_draw.py -exp KF_exp1b
 $ # conda deactivate
 ```
+
+You're welcome to contact us or [raise an issue](https://github.com/eustomaqua/AssessBias/issues) if you find any typos or errors.
 
 
 ## Additional information
