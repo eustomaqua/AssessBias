@@ -28,7 +28,7 @@ from pyfair.granite.draw_chart import (
 
 
 class PlotA_initial(GraphSetup):
-    pass
+    # pass
     _dr_ptb = 'K'  # perturb(ation)  # 'K','L'
 
     _perf_metric = [

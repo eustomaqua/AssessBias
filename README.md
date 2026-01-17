@@ -6,6 +6,7 @@
 
 https://stackoverflow.com/questions/1559424/coverage-py-exclude-files
 https://stackoverflow.com/questions/2386975/no-source-for-code-message-in-coverage-py
+https://coverage.readthedocs.io/en/latest/excluding.html
 -->
 
 
