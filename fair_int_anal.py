@@ -822,7 +822,7 @@ class PlotA_fair_ens(PlotA_initial):
                                r'$\hat{\mathbf{df}}_\text{prev}$']
         # Mat_B_bin = df[key_B_bin].values.astype(DTY_FLT).T
         Mat_B_ext = df[key_B_nonbin].values.astype(DTY_FLT).T
-        Mat_B_extalt = df[key_B_extalt].values.astype(DTY_FLT).T 
+        Mat_B_extalt = df[key_B_extalt].values.astype(DTY_FLT).T
         kws = {'cmap_name': 'Blues', 'rotate': 65}
 
         # lbl_B_ext = [f'{i} ext{ver_mark}' for i in GRP_FAIR_COMMON
