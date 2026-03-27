@@ -2,7 +2,7 @@
 
 
 import os
-# import pdb
+import pdb
 import pandas as pd
 import numpy as np
 
@@ -17,6 +17,8 @@ from pyfair.granite.draw_fancy import (
     multi_boxplot_rect, radar_chart)  # boxplot_rect,
 from pyfair.granite.draw_chart import (
     analogous_confusion_extended)  # ,multiple_scatter_chart)
+
+from pyfair.granite.draw_fancy import multi_boxplot_rect_revised
 
 
 # -----------------------------
@@ -1068,6 +1070,192 @@ class PlotA_norm_cls(PlotA_initial):
 
 
 # -----------------------------
+# Revision
+
+# GRP_FAIR_COMMON[0] = r'$\Delta$' + GRP_FAIR_COMMON[0]
+# GRP_FAIR_COMMON[1] = r'$\Delta$' + GRP_FAIR_COMMON[1]
+# GRP_FAIR_COMMON[2] = r'$\Delta$' + GRP_FAIR_COMMON[2]
+GRP_FAIR_COMMON = [r'$\Delta$' + i for i in GRP_FAIR_COMMON]
+
+
+class PlotB_fair_ens(PlotA_fair_ens):
+    def draw_extended_grp_scat(self, df, tag_grp, tag_ext, tag_ext_alt,
+                               figname, verbose=False):
+        labels = ['ori', 'ext', 'alt']
+        lbl_hfm = [[r'$\mathbf{df}_\text{prev}$', r'$\mathbf{df}$',
+                    r'$\mathbf{df}^{avg}$'], [
+            r'$\hat{\mathbf{df}}_\text{prev}$', r'$\hat{\mathbf{df}}$',
+            r'$\hat{\mathbf{df}}^{avg}$'], ]
+        lbl_dim2 = ['DP', 'EO', 'PQP', r'$\mathbf{df}_\text{prev}$',
+                    r'$\hat{\mathbf{df}}_\text{prev}$']
+        lbl_dim2[2] = 'PP'
+        lbl_dim2[:3] = GRP_FAIR_COMMON
+
+        # multi_boxplot_rect_revised(
+        #     # df, tag_grp[:3], None,
+        #     df, tag_grp[:3], tag_ext[:3],
+        #     figname=f'{figname}_grpext', annotX=lbl_dim2[:3],
+        #     locate="upper left")
+        multi_boxplot_rect_revised(
+            df, tag_grp[:3], tag_ext[:3], tag_ext_alt[:3],
+            figname=f'{figname}_grpalt', annotX=lbl_dim2[:3],
+            locate="upper left")
+        pdb.set_trace()
+        if not verbose:
+            return
+
+        for i, tg in enumerate(tag_grp):
+            fgn = '{}_{}'.format(
+                figname, f'grp{i+1}' if i < 3 else f'hfm{i+3}')
+            multi_boxplot_rect(df, [tg, tag_ext[
+                i], tag_ext_alt[i]], figname=fgn,
+                annotX=labels if i < 3 else lbl_hfm[i - 3])  # not tag_Xs
+        multi_boxplot_rect(df, tag_grp, tag_ext,
+                           figname=f'{figname}_dim2', annotX=lbl_dim2)
+        multi_boxplot_rect(df, tag_grp, tag_ext, tag_ext_alt,
+                           figname=f'{figname}_dim3', annotX=lbl_dim2)
+        pdb.set_trace()
+        return
+
+    def avg_draw_extended_grp_scat(self, df, tag_grp, tag_ext, tag_ext_alt, figname, verbose=False, ver_mark='(avg)'):
+        labels = ['ori', 'ext', 'alt', f'ext{ver_mark}', f'alt{ver_mark}']
+        lbl_dim2 = GRP_FAIR_COMMON + [
+            r'$\mathbf{df}_\text{prev}$', r'$\hat{\mathbf{df}}_\text{prev}$']
+        # palette = ['black', '#387EB8', '#C24E44', '#184879', '#762E29']
+        # palette_alt = ['black', '#066190', '#C42238', '#024163', '#8E0F31']
+        # palette_whole = ['black', '#066190', '#C42238', '#024163', '#8E0F31',
+        #                  '#387EB8', '#C24E44', '#184879', '#762E29', ]
+        palette_whole = ['black', '#066190', '#C42238', '#024163', '#8E0F31',
+                         '#77AECD', '#D98380', '#066190', '#C42238', ]
+        palette = palette_whole[:5]
+        palette_alt = ['black'] + palette_whole[-4:]
+
+        fgn = figname.replace('_avg', '')
+        # multi_boxplot_rect_revised(
+        #     df, tag_grp[:3], tag_ext[:3], labels =['ori'] + labels[-2:],
+        #     palette=palette_alt,      # figname=f'{fgn}_grpext_avg',
+        #     figname=f'{fgn}_ge_avg', annotX=lbl_dim2[:3], locate="upper left")
+        multi_boxplot_rect_revised(
+            df, tag_grp[:3], tag_ext[:3], tag_ext_alt[:3],
+            labels =['ori'] + labels[-2:], palette=palette_alt,
+            figname=f'{fgn}_ga_avg',  # figname=f'{fgn}_grpalt_avg',
+            annotX=lbl_dim2[:3], locate="upper left")
+        multi_boxplot_rect_revised(
+            df, tag_grp[:3], tag_ext[-3:], tag_ext_alt[-3:],
+            tag_ext[:3], tag_ext_alt[:3], palette=palette_whole,
+            figname=f'{fgn}_gm_avg',  # figname=f'{fgn}_group_max_avg',
+            annotX=lbl_dim2[:3], locate="upper left", figsize='M-NT')
+
+        # multi_boxplot_rect_revised(
+        #     df, tag_grp[:3], tag_ext[-3:], labels =labels[:3],
+        #     figname=f'{fgn}_ge',  # figname=f'{fgn}_grpext',
+        #     palette=palette, annotX=lbl_dim2[:3], locate="upper left")
+        multi_boxplot_rect_revised(
+            df, tag_grp[:3], tag_ext[-3:], tag_ext_alt[-3:],
+            labels =labels[:3], figname=f'{fgn}_ga',
+            # figname=f'{fgn}_grpalt',  # f'{fgn}_grpalt_max',
+            palette=palette, annotX=lbl_dim2[:3], locate="upper left")
+        pdb.set_trace()
+        return
+
+    def draw_trade_off(self, df, pick, tag_X, tag_Ys, figname, ver_mark=''):
+        annotZs = GRP_FAIR_COMMON + [
+            r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
+        tmp_ext = [r'$\text{DP}^\text{ext}$',
+                   r'$\text{EOpp}^\text{ext}$',
+                   r'$\text{PP}^\text{ext}$', ]
+        tmp_ext_alt = [r'$\text{DP}^\text{alt}$',
+                       r'$\text{EOpp}^\text{alt}$',
+                       r'$\text{PP}^\text{alt}$', ]
+        for pk in pick:
+            annotX = self._perf_metric[pk]
+            line_reg_with_marginal_distr(  # tag_X[-2:]+tag_X[-3:-2]
+                df, tag_X[pk], 'Fairness', tag_X[-3:], annotZs[-3:],
+                annotX=annotX, annotY='Individual fairness',
+                snspec='sty4b', figname=f'{figname}_to{pk}_s4')
+            line_reg_with_marginal_distr(
+                df, tag_X[pk], 'Fairness', tag_Ys[0][:3], annotZs[:3],
+                annotX=annotX, annotY='Group fairness (bin-val)',
+                snspec='sty4b', figname=f'{figname}_to{pk}_s1')
+            line_reg_with_marginal_distr(
+                df, tag_X[pk], 'Fairness', tag_Ys[1][:3],
+                # [f'{i} ext.' for i in annotZs[:3]], annotX=annotX,
+                tmp_ext, annotX=annotX,
+                annotY='Extended group fairness (multival)',
+                snspec='sty4b', figname=f'{figname}_to{pk}_s2')
+            line_reg_with_marginal_distr(
+                # df, tag_X[pk], 'Fairness', tag_Ys[0][:3],
+                # [f'{i} ext. alt' for i in annotZs[:3]], annotX=annotX,
+                df, tag_X[pk], 'Fairness', tag_Ys[2][:3],
+                tmp_ext_alt, annotX=annotX,
+                annotY='Alternative extended group fairness (multival)',
+                snspec='sty4b', figname=f'{figname}_to{pk}_s3')
+        pdb.set_trace()
+
+        key_A = [tag_X[:8][i] for i in pick]
+        key_C = [tag_X[8:16][i] for i in pick]
+        key_B_bin = tag_Ys[0][:3] + tag_X[-3:] + tag_Ys[0][-2:]
+        key_B_nonbin = tag_Ys[1][:3] + tag_X[-3:] + tag_Ys[1][-2:]
+        key_B_extalt = tag_Ys[2][:3] + tag_X[-3:] + tag_Ys[2][-2:]
+        lbl_A = [self._perf_metric[i] for i in pick]
+        lbl_C = [self._dal_metric[i] for i in pick]
+        lbl_B_bin = annotZs + [r'$\mathbf{df}_\text{prev}$',
+                               r'$\hat{\mathbf{df}}_\text{prev}$']
+        lbl_B_ext = tmp_ext + lbl_B_bin[3:6] + [
+            r'$\mathbf{df}$', r'$\hat{\mathbf{df}}$']
+        lbl_B_extalt = tmp_ext_alt + lbl_B_bin[3:6] + [
+            r'$\mathbf{df}^\text{avg}$',
+            r'$\hat{\mathbf{df}}^\text{avg}$']
+        Mat_B_bin = df[key_B_bin].values.astype(DTY_FLT).T
+        Mat_B_ext = df[key_B_nonbin].values.astype(DTY_FLT).T
+        Mat_B_extalt = df[key_B_extalt].values.astype(DTY_FLT).T
+        kws = {'cmap_name': 'Blues', 'rotate': 65}
+        analogous_confusion_extended(
+            df[key_C + key_A].values.astype(DTY_FLT).T, Mat_B_bin,
+            lbl_C + lbl_A, lbl_B_bin, f'{figname}_cont1p', **kws)
+        kws['cmap_name'] = 'Oranges'
+        analogous_confusion_extended(
+            df[key_C + key_A].values.astype(DTY_FLT).T, Mat_B_ext,
+            lbl_C + lbl_A, lbl_B_ext, f'{figname}_cont2p', **kws)
+        kws['cmap_name'] = 'RdPu'
+        analogous_confusion_extended(
+            df[key_C + key_A].values.astype(DTY_FLT).T, Mat_B_extalt,
+            lbl_C + lbl_A, lbl_B_extalt, f'{figname}_cont3p', **kws)
+        return
+
+    # def schedule_mspaint(self, raw_dframe, figname=''):
+    #     nb_set, id_set = self.recap_sub_data(
+    #         raw_dframe, sa_ir=3, sa_r=4)
+    #     mk = 'tst'
+    #     first_incl = verbose = False
+    #     df_nonbin = self.obtain_multival_senatt(
+    #         raw_dframe, id_set, mk, first_incl=first_incl)
+    #     tag_acc, tag_sa1, _ = self.obtain_tag_col(mk)
+    #
+    #     tmp = tag_sa1[-6: -3]
+    #     df_nonbin['extGrp'] = df_nonbin[
+    #         tmp[0]] + df_nonbin[tmp[1]] + df_nonbin[tmp[2]]
+    #     tmp = tag_sa1[-3:]
+    #     df_nonbin['extAlt'] = df_nonbin[tmp[0]] + df_nonbin[
+    #         tmp[1]] + df_nonbin[tmp[2]] + df_nonbin['extGrp']
+    #     pick = [0, 4, 5]
+    #     col_grp = tag_sa1[:3] + [tag_sa1[16 + 3], tag_sa1[27 + 3]]
+    #     col_ext = tag_sa1[4:10][:3] + [tag_sa1[16 + 7], tag_sa1[27 + 7]]
+    #     col_ext_alt = tag_sa1[10:16][:3] + [
+    #         tag_sa1[16 + 10], tag_sa1[27 + 10]]
+    #     self.draw_extended_grp_scat(
+    #         df_nonbin, col_grp, col_ext, col_ext_alt,
+    #         f'{figname}_scat', verbose)
+    #     # self.draw_trade_off(df_nonbin, pick, tag_acc[:16] + [
+    #     #     tag_acc[19 + 2], tag_acc[19 + 4], tag_acc[15 + 3], ], [
+    #     #     col_grp, col_ext, col_ext_alt], f'{figname}_to')
+    #
+    #     pdb.set_trace()
+    #     return
+
+    # def schedule_mspaint_avg(self):
+    #     pdb.set_trace()
+    #     return
 
 
 # -----------------------------

@@ -1,13 +1,17 @@
 # AssessBias
 
 <!--
-![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
 [![Documentation Status](https://readthedocs.org/projects/assessbias/badge/?version=latest)](https://assessbias.readthedocs.io/en/latest/?badge=latest)
 
 https://stackoverflow.com/questions/1559424/coverage-py-exclude-files
 https://stackoverflow.com/questions/2386975/no-source-for-code-message-in-coverage-py
 https://coverage.readthedocs.io/en/latest/excluding.html
 -->
+
+![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/Licence-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![arXiv](https://img.shields.io/badge/arXiv-2506.12556-B31B1B.svg)](https://arxiv.org/pdf/2506.12556)
 
 
 Welcome to the AssessBias's documentation. This is to help you reproduce our work from
