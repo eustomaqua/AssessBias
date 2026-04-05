@@ -22,12 +22,12 @@ def excl_test_fair_int_anal():
 
 
 def test_fair_int_anal():
-    filename = 'mCV_exp1_iter5_pms'
+    filename = 'KF_exp1_iter5_pms'
     sheetname = 'exp1b_minmax'
     case = PlotB_fair_ens()
     raw_df = case.load_raw_dataset(filename, sheetname)
-    # case.schedule_mspaint(raw_df, sheetname)
-    case.schedule_mspaint_avg(raw_df, sheetname)
+    case.schedule_mspaint(raw_df, sheetname)
+    # case.schedule_mspaint_avg(raw_df, sheetname)
     return
 
 

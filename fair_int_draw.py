@@ -13,6 +13,7 @@ from pyfair.facil.utils_saver import elegant_print
 from pyfair.facil.utils_timer import elegant_durat, elegant_dated
 
 from fair_int_anal import (PlotA_fair_ens, PlotA_norm_cls)
+from fair_int_anal import PlotB_fair_ens as PlotA_fair_ens
 
 
 # =============================
