@@ -19,7 +19,8 @@ from pyfair.granite.draw_chart import (
     analogous_confusion_extended)  # ,multiple_scatter_chart)
 
 from pyfair.granite.draw_fancy import (
-    multi_boxplot_rect_revised, tabular_chart)
+    multi_boxplot_rect_revised, tabular_chart,
+    radar_chart_gather, tabular_chart_gather)
 from pyfair.granite.draw_chart import anal_conf_extended_subplt
 from pyfair.granite.draw_addtl import (
     linreg_w_marg_dist_revised, linreg_w_marg_dist_revised_subplt)
@@ -1223,19 +1224,38 @@ class PlotB_fair_ens(PlotA_fair_ens):
         nm_clf = ['bagging', 'AdaBoost', 'LightGBM',
                   'FairGBM', 'FairGBM', 'FairGBM', 'AdaFair#1',
                   'FairGBM', 'FairGBM', 'FairGBM', 'AdaFair#2']
+        # '' '
+        # for ps in pick_set:
+        #     for pc in pick_clf:
+        #         df_tmp, _ = _internal(ps, pc)
+        #         radar_chart(df_tmp, currX, labels,  # annotY,
+        #                     annotY if pc == 10 else None,
+        #                     figname=f'{fgn}_s{ps}c{pc}', stylish=True)
+        #         tabular_chart(
+        #             df_tmp, currX, labels, annotY,
+        #             data=nm_set[ps], algo=nm_clf[pc],
+        #             figname=f'{fgn.replace("radar", "tab")}_s{ps}c{pc}p')
+        #         # os.remove(f'{fgn}_s{ps}c{pc}.pdf')
+        #         # os.remove(f'{fgn.replace("radar", "tab")}_s{ps}c{pc}p.pdf')
+        # '' '
+
+        df_tmp_set = []
         for ps in pick_set:
+            tmp = []
             for pc in pick_clf:
-                df_tmp, _ = _internal(ps, pc)
-                radar_chart(df_tmp, currX, labels,  # annotY,
-                            annotY if pc == 10 else None,
-                            figname=f'{fgn}_s{ps}c{pc}', stylish=True)
-                tabular_chart(
-                    df_tmp, currX, labels, annotY,
-                    data=nm_set[ps], algo=nm_clf[pc],
-                    figname=f'{fgn.replace("radar", "tab")}_s{ps}c{pc}p')
-                # os.remove(f'{fgn}_s{ps}c{pc}.pdf')
-                # os.remove(f'{fgn.replace("radar", "tab")}_s{ps}c{pc}p.pdf')
-        # pdb.set_trace()
+                tmp.append(_internal(ps, pc)[0])
+            df_tmp_set.append(tmp)
+            del tmp
+        # # labels[4] = r'GEI ($\alpha$=0.5)'
+        # currX = currX[-1:] + currX[:-1]
+        # labels = labels[-1:] + labels[:-1]
+        radar_chart_gather(df_tmp_set, currX, labels, annotY,
+                           figname=f'{fgn}_sc', stylish=True, sharey=True)
+        tabular_chart_gather([i[:3] for i in df_tmp_set], currX, labels, annotY,
+                             data=[nm_set[ps] for ps in pick_set],
+                             algo=[nm_clf[pc] for pc in pick_clf[:3]],
+                             figname=f'{fgn.replace("radar","tab")}_scp')
+        pdb.set_trace()
         return
 
     def avg_draw_trade_off_alt(self, df, pick, tag_X, tag_Ys, figname):
