@@ -24,7 +24,8 @@ from pyfair.granite.draw_fancy import (
 from pyfair.granite.draw_chart import anal_conf_extended_subplt
 from pyfair.granite.draw_addtl import (
     linreg_w_marg_dist_revised,  # linreg_w_marg_dist_revised_subpltv1,
-    linreg_w_marg_dist_rev_sup_pv1, linreg_w_marg_dist_rev_sup_pv2)
+    linreg_w_marg_dist_rev_sup_pv1, linreg_w_marg_dist_rev_sup_pv2,
+    gathering_lin_reg_sup_tim)
 
 
 # -----------------------------
@@ -1093,7 +1094,7 @@ class PlotA_norm_cls(PlotA_initial):
 # GRP_FAIR_COMMON[1] = r'$\Delta$' + GRP_FAIR_COMMON[1]
 # GRP_FAIR_COMMON[2] = r'$\Delta$' + GRP_FAIR_COMMON[2]
 
-GRP_FAIR_COMMON = [r'$\Delta$' + i for i in GRP_FAIR_COMMON]
+# GRP_FAIR_COMMON = [r'$\Delta$' + i for i in GRP_FAIR_COMMON]
 GRP_EXTENSIONS = ['Original', 'Extended', 'Alternative',
                   'Extended (avg.)', 'Alternative (avg.)']
 
@@ -1256,14 +1257,14 @@ class PlotB_fair_ens(PlotA_fair_ens):
         # # labels[4] = r'GEI ($\alpha$=0.5)'
         # currX = currX[-1:] + currX[:-1]
         # labels = labels[-1:] + labels[:-1]
-        radar_chart_gather(df_tmp_set, currX, labels, annotY,
-                           figname=f'{fgn}_sc', stylish=True, sharey=True,
-                           entitle=False)
         tabular_chart_gather([i[:3] for i in df_tmp_set], currX, labels, annotY,
                              data=[nm_set[ps] for ps in pick_set],
                              algo=[nm_clf[pc] for pc in pick_clf[:3]],
                              figname=f'{fgn.replace("radar","tab")}_scp',
                              panel='yp')
+        radar_chart_gather(df_tmp_set, currX, labels, annotY,
+                           figname=f'{fgn}_sc', stylish=True, sharey=True,
+                           entitle=False)
         # '' '
         return
 
@@ -1729,9 +1730,10 @@ class PlotB_fair_ens(PlotA_fair_ens):
         # self.draw_extended_grp_scat(
         #     df_nonbin, col_grp, col_ext, col_ext_alt,
         #     f'{figname}_scat', verbose)
-        self.draw_trade_off(df_nonbin, pick, tag_acc[:16] + [
-            tag_acc[19 + 2], tag_acc[19 + 4], tag_acc[15 + 3], ], [
-            col_grp, col_ext, col_ext_alt], f'{figname}_to')
+        if verbose:
+            self.draw_trade_off(df_nonbin, pick, tag_acc[:16] + [
+                tag_acc[19 + 2], tag_acc[19 + 4], tag_acc[15 + 3], ], [
+                col_grp, col_ext, col_ext_alt], f'{figname}_to')
 
         tim_idv = [tag_acc[16 + 3], ] + tag_acc[16 + 4 + 4:][:2]
         tim_idv = tim_idv[:: -1]   # DR,Theil,GEI: then reverse
@@ -1742,14 +1744,24 @@ class PlotB_fair_ens(PlotA_fair_ens):
             27 + 4 + 7]]  # df4one sen-att: bin-val, multival, hat_df x2
         df_nonbin['idv_ptb'] = df_nonbin[tag_acc[-2]] + df_nonbin[
             tim_idv[-1]]  # 'idvDR_perturb','idv_dr_ptb', 'idvDR_'
-        self.draw_extended_idv_tim(df_nonbin, tim_grp[:2], [
-            tim_idv, tim_df, tim_df_pl], figname + '_idv')
-        self.draw_extended_grp_tim(df_nonbin, tag_sa1[3], [
-            tag_sa1[16], 'extGrp', 'extAlt'], figname + '_grp')
-        self.draw_extended_hfm_tim(df_nonbin, tag_sa1[20], [
-            tag_sa1[27], tag_sa1[27 + 4], tag_sa1[27 + 4 + 7]],
-            figname + '_hfm')
-        # pdb.set_trace()
+        # '' '
+        # self.draw_extended_idv_tim(df_nonbin, tim_grp[:2], [
+        #     tim_idv, tim_df, tim_df_pl], figname + '_idv')
+        # self.draw_extended_grp_tim(df_nonbin, tag_sa1[3], [
+        #     tag_sa1[16], 'extGrp', 'extAlt'], figname + '_grp')
+        # self.draw_extended_hfm_tim(df_nonbin, tag_sa1[20], [
+        #     tag_sa1[27], tag_sa1[27 + 4], tag_sa1[27 + 4 + 7]],
+        #     figname + '_hfm')
+        # # pdb.set_trace()
+        # '' '
+
+        tag_idv = (tim_grp[:2], [tim_idv, tim_df, tim_df_pl])
+        tag_grp = (tag_sa1[3], [tag_sa1[16], 'extGrp', 'extAlt'])
+        tag_hfm = (tag_sa1[20], [
+            tag_sa1[27], tag_sa1[27 + 4], tag_sa1[27 + 4 + 7]])
+        self.avg_draw_extended_tim(df_nonbin, tag_grp, tag_idv, tag_hfm,
+                                   figname + '_collect_tim', verbose)
+        del tag_grp, tag_idv, tag_hfm
         return
 
     def schedule_mspaint_avg(self, raw_dframe, figname=''):
@@ -1778,9 +1790,10 @@ class PlotB_fair_ens(PlotA_fair_ens):
         col_grp = tag_sa1[:3] + [tag_sa1[16 + 3], tag_sa1[27 + 3]]
         col_ext = tag_sa1[4:10][-3:] + [tag_sa1[23], tag_sa1[34]]
         col_ext_alt = tag_sa1[10:16][-3:] + [tag_sa1[26], tag_sa1[37]]
-        self.avg_draw_trade_off(df_nonbin, pick, tag_acc[
-            :16] + [tag_acc[21], tag_acc[23], tag_acc[18], ], [
-            col_grp, col_ext, col_ext_alt], f'{figname}_to_avg')
+        if verbose:
+            self.avg_draw_trade_off(df_nonbin, pick, tag_acc[
+                :16] + [tag_acc[21], tag_acc[23], tag_acc[18], ], [
+                col_grp, col_ext, col_ext_alt], f'{figname}_to_avg')
         self.avg_draw_extended_grp_scat(
             df_nonbin, col_grp, col_ext + tag_sa1[4:7],
             col_ext_alt + tag_sa1[10:13], f'{figname}_scat_avg', verbose)
@@ -1797,6 +1810,8 @@ class PlotB_fair_ens(PlotA_fair_ens):
             [2, 3, 4], [0, 1, 2, 6, 10], raw_dframe, id_set, mk, fgn)
         #   # [2, 3, 4], [0, 1, 2], raw_dframe, id_set, mk, fgn)
 
+        if not verbose:
+            return
         col_ext_max = tag_sa1[4:10][:3] + [tag_sa1[23], tag_sa1[34]]
         col_ext_alt_max = tag_sa1[10:16][:3] + [
             tag_sa1[26], tag_sa1[37]]
@@ -1810,6 +1825,164 @@ class PlotB_fair_ens(PlotA_fair_ens):
                 tag_acc[21], tag_acc[23], tag_acc[18], ], [
                 col_grp, col_ext_max, col_ext_alt_max,
                 col_ext, col_ext_alt], f'{figname}_nc')
+        return
+
+    def avg_draw_extended_tim(self, df, tag_grp, tag_idv, tag_hfm,
+                              figname, verbose=False):
+        tg_X, tg_Ys = tag_grp
+        ti_X, ti_Ys = tag_idv
+        th_X, th_Ys = tag_hfm
+        ant_X = [r'$T_\text{bin-val}$ (sec)', r'$T_\text{gf (bin-val)}$ (sec)',
+                 r'$T_{\mathbf{df}_\text{prev} ~\text{(bin-val)}}$']
+        ant_Ys = [r'$\frac{ T_\text{multival} }{ T_\text{bin-val} }$',
+                  r'$\frac{ T_\text{if (multival)} }{ T_\text{gf (bin-val)} }$',
+                  r'$\frac{ T_{\mathbf{df} ~\text{(multival)}} }{ T_{\mathbf{df}_\text{prev} ~\text{(bin-val)}} }$']
+        ant_Zs = [r'$T_\text{multival} = T_\text{bin-val}$',
+                  [r'$T_\text{if} = T_\text{gf (bin-val)}$',
+                   r'$T_\text{gf (multival)}$', r'$T_\text{GEI}$', r'$T_\text{Theil}$',
+                   r'$T_\text{DR}$'],
+                  r'$T_{\mathbf{df} ~\text{(multival)}} = T_{\mathbf{df}_\text{prev} ~\text{(bin-val)}}$',
+                  [r'$T_{\mathbf{df} ~\text{(multival)}} = T_{\mathbf{df}_\text{prev} ~\text{(bin-val)}}$',
+                   r'$T_{\mathbf{df} ~\text{(multival)}}$',
+                   r'$T_{\hat{\mathbf{df}} ~\text{(bin-val)}}$',
+                   r'$T_{\hat{\mathbf{df}} ~\text{(multival)}}$']]
+        # ant_X[0] = ant_X[1]  # r'$T_\text{gf (bin-val)}$ (sec)'
+        # ant_Ys[0] = r'$\frac{ T_\text{gf (multival)} }{ T_\text{gf (bin-val)} }$'
+        # ant_Zs[0] = r'$T_\text{gf (multival)} = T_\text{gf (bin-val)}$'
+        ant_Zs[3][0] = r'$T_{\mathbf{df}} = T_{\mathbf{df}_\text{prev} ~\text{(bin-val)}}$'
+
+        tmp = [ti_X[1], ] + ti_Ys[0]
+        gathering_lin_reg_sup_tim(
+            df, [tg_X, ti_X[0], th_X, th_X], [
+                tg_Ys[0], tmp[:-1], th_Ys[0], th_Ys],
+            figname, ant_X, ant_Ys, ant_Zs)
+        # pdb.set_trace()
+        return
+
+
+class PlotB_gather(PlotB_fair_ens):
+    # def data_gathering_alt(self, raw_df_b, raw_df_c, mk='tst'):
+    #     first_incl = False
+    #     nb_set, id_set = self.recap_sub_data(raw_df_b, sa_ir=3, sa_r=4)
+    #     pdb.set_trace()
+    #     nb_set, id_set = self.recap_sub_data(raw_df_c, sa_ir=11, sa_r=0)
+    #     pdb.set_trace()
+    #     return
+
+    def data_gathering(self, raw_df_b, raw_df_c, mk='tst'):
+        # first_incl = verbose = False     # mk = 'tst'
+        first_incl = False
+        nb_set, id_set = self.recap_sub_data(raw_df_b, sa_ir=3, sa_r=4)
+        df_b = self.obtain_multival_senatt(raw_df_b, id_set, mk, first_incl)
+        nb_set, id_set = self.recap_sub_data(raw_df_c, sa_ir=11, sa_r=0)
+        df_c = self.obtain_multival_senatt(raw_df_c, id_set, mk, first_incl)
+        df_nonbin = pd.concat([df_b, df_c], axis=0).reset_index(drop=True)
+        # df_nonbin = df_b  # pdb.set_trace()
+
+        tag_acc, tag_sa1, _ = self.obtain_tag_col(mk)
+        curr = tag_acc[:8][2:4] + tag_acc[:8][6:7]
+        df_nonbin[curr[2]] = (df_nonbin[curr[0]] + df_nonbin[curr[1]]) / 2
+        curr = tag_acc[-2:] + tag_acc[8:16][6:7] + curr[-1:]
+        df_nonbin[curr[2]] = (df_nonbin[curr[0]] + df_nonbin[curr[1]]) / 2
+        df_nonbin[curr[2]] = np.abs(df_nonbin[curr[3]] - df_nonbin[curr[2]])
+        del curr
+        tag_acc = tag_acc[: -2]
+
+        tmp = tag_sa1[-6: -3]
+        df_nonbin['extGrp'] = df_nonbin[tmp[
+            0]] + df_nonbin[tmp[1]] + df_nonbin[tmp[2]]    # TimeCost
+        tmp = tag_sa1[-3:]
+        df_nonbin['extAlt'] = df_nonbin[tmp[0]] + df_nonbin[tmp[
+            1]] + df_nonbin[tmp[2]] + df_nonbin['extGrp']  # TimeCost
+        return df_nonbin, tag_acc  # tt
+
+    def schedule_mspaint(self, raw_dframe, figname=''):
+        mk, verbose = 'tst', False
+        tag_acc, tag_sa1, _ = self.obtain_tag_col(mk)
+        df_nonbin, tag_acc = self.data_gathering(*raw_dframe)
+        pick = [0, 4, 5, 6]
+
+        col_grp = tag_sa1[:3] + [tag_sa1[16 + 3], tag_sa1[27 + 3]]
+        col_ext = tag_sa1[4:10][:3] + [tag_sa1[16 + 7], tag_sa1[27 + 7]]
+        col_ext_alt = tag_sa1[10:16][:3] + [
+            tag_sa1[16 + 10], tag_sa1[27 + 10]]
+        self.draw_trade_off(df_nonbin, pick, tag_acc[:16] + [
+            tag_acc[19 + 2], tag_acc[19 + 4], tag_acc[15 + 3], ], [
+            col_grp, col_ext, col_ext_alt], f'{figname}_to')
+        tim_idv = [tag_acc[16 + 3], ] + tag_acc[16 + 4 + 4:][:2]
+        tim_idv = tim_idv[:: -1]   # DR,Theil,GEI: then reverse
+        tim_df_pl = [tag_acc[26:][6], tag_acc[26:][6 + 7],
+                     ]  # df/hat_df multiver (df intersectional)
+        tim_grp = [tag_sa1[3], tag_sa1[16], 'extGrp', 'extAlt']  # three
+        tim_df = [tag_sa1[20], tag_sa1[27], tag_sa1[27 + 4], tag_sa1[
+            27 + 4 + 7]]  # df4one sen-att: bin-val, multival, hat_df x2
+        df_nonbin['idv_ptb'] = df_nonbin[tag_acc[-2]] + df_nonbin[
+            tim_idv[-1]]  # 'idvDR_perturb','idv_dr_ptb', 'idvDR_'
+        # self.draw_extended_grp_scat(df_nonbin, tag_sa1[:3] + [
+        #     tag_sa1[16 + 3], tag_sa1[27 + 3]],
+        #     tag_sa1[4:10][:3] + [tag_sa1[16 + 7], tag_sa1[27 + 7]],
+        #     tag_sa1[10:16][:3] + [tag_sa1[16 + 10], tag_sa1[27 + 10]],
+        #     f'{figname}_scat', verbose)
+        # # pdb.set_trace()
+        # self.draw_extended_grp_tim(df_nonbin, tag_sa1[3], [
+        #     tag_sa1[16], 'extGrp', 'extAlt'], figname + '_grp', verbose)
+        # self.draw_extended_hfm_tim(df_nonbin, tag_sa1[20], [
+        #     tag_sa1[27], tag_sa1[27 + 4], tag_sa1[27 + 4 + 7]],
+        #     figname + '_hfm')
+        # self.draw_extended_idv_tim(df_nonbin, tim_grp[:2], [
+        #     tim_idv, tim_df, tim_df_pl], figname + '_idv')
+
+        if not verbose:
+            return
+        tag_grp = (tag_sa1[3], [tag_sa1[16], 'extGrp', 'extAlt'])
+        tag_idv = (tim_grp[:2], [tim_idv, tim_df, tim_df_pl])
+        tag_hfm = (tag_sa1[20], [
+            tag_sa1[27], tag_sa1[27 + 4], tag_sa1[27 + 4 + 7]])
+        self.avg_draw_extended_tim(df_nonbin, tag_grp, tag_idv, tag_hfm,
+                                   figname + '_collect_tim', verbose)
+        del tag_grp, tag_idv, tag_hfm
+        return
+
+    def schedule_mspaint_avg(self, raw_dframe, figname=''):
+        mk, verbose = 'tst', False
+        tag_acc, tag_sa1, _ = self.obtain_tag_col(mk)
+        df_nonbin, tag_acc = self.data_gathering(*raw_dframe)
+        pick = [0, 4, 5, 6]
+
+        # extension in average forms, above is maximal forms
+        col_grp = tag_sa1[:3] + [tag_sa1[16 + 3], tag_sa1[27 + 3]]
+        col_ext = tag_sa1[4:10][-3:] + [tag_sa1[23], tag_sa1[34]]
+        col_ext_alt = tag_sa1[10:16][-3:] + [tag_sa1[26], tag_sa1[37]]
+        self.avg_draw_trade_off(df_nonbin, pick, tag_acc[
+            :16] + [tag_acc[21], tag_acc[23], tag_acc[18], ], [
+            col_grp, col_ext, col_ext_alt], f'{figname}_to_avg')
+        if verbose:
+            self.avg_draw_extended_grp_scat(
+                df_nonbin, col_grp, col_ext + tag_sa1[4:7],
+                col_ext_alt + tag_sa1[10:13], f'{figname}_scat_avg', verbose)
+
+        col_ext_max = tag_sa1[4:10][:3] + [tag_sa1[23], tag_sa1[34]]
+        col_ext_alt_max = tag_sa1[10:16][:3] + [
+            tag_sa1[26], tag_sa1[37]]
+        if verbose:
+            self.avg_draw_trade_off_alt(
+                df_nonbin, pick, tag_acc[:16] + [
+                    tag_acc[21], tag_acc[23], tag_acc[18], ], [
+                    col_grp, col_ext_max, col_ext_alt_max,
+                    col_ext, col_ext_alt], f'{figname}_to_alt')
+        self.avg_draw_incompatible_alt(
+            df_nonbin, tag_acc[:16] + [
+                tag_acc[21], tag_acc[23], tag_acc[18], ], [
+                col_grp, col_ext_max, col_ext_alt_max,
+                col_ext, col_ext_alt], f'{figname}_nc')
+
+        if not verbose:
+            return
+        raw_df_b = raw_dframe[0]
+        _, id_set = self.recap_sub_data(raw_df_b, sa_ir=3, sa_r=4)
+        fgn = f'{figname}_radar_avg'
+        self.avg_depict_separately(
+            [2, 3, 4], [0, 1, 2, 6, 10], raw_df_b, id_set, mk, fgn)
         return
 
 

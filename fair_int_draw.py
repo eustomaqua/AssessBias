@@ -14,6 +14,7 @@ from pyfair.facil.utils_timer import elegant_durat, elegant_dated
 
 from fair_int_anal import (PlotA_fair_ens, PlotA_norm_cls)
 from fair_int_anal import PlotB_fair_ens as PlotA_fair_ens
+from fair_int_anal import PlotB_gather   # PlotB_norm_cls as A
 
 
 # =============================
@@ -67,6 +68,25 @@ class FairNonbinaryPlotting:
         elif self._trial_type.endswith('exp1c'):
             # xlsx_name += '_regular'
             self._iterator = PlotA_norm_cls()
+
+        elif self._trial_type.endswith(
+                'exp1') or self._trial_type.endswith('exp1d'):
+            xlsx_name = self._trial_type.split('1')[0]
+            xlsx_name = f'{xlsx_name}1_iter{self._nb_cv}_pms'
+            self._iterator = PlotB_gather()  # exp1d
+            pre = self._prep.replace('_', '')
+            raw_df_b = self._iterator.load_raw_dataset(
+                xlsx_name, f'exp1b_{pre}')
+            raw_df_c = self._iterator.load_raw_dataset(
+                xlsx_name, f'exp1c_{pre}')
+            raw_df = [raw_df_b, raw_df_c]
+            import os
+            pre = f'exp1_{pre}'
+            self._iterator.schedule_mspaint(raw_df, pre)
+            self._iterator.schedule_mspaint_avg(raw_df, pre)
+            os.remove(f'{pre}_nc_df_ga.pdf')
+            # os.remove(f'{pre}_to_ps_avg.pdf')
+            return  # Revision
 
         sheet_name = 'exp{}_{}'.format(
             self._trial_type[-2:], self._prep.replace('_', ''))
@@ -154,4 +174,5 @@ if __name__ == "__main__":
 
 # """
 # python fair_int_draw.py -exp KF_exp1b
+# python fair_int_draw.py -exp KF_exp1  # mCV_exp1
 # """
