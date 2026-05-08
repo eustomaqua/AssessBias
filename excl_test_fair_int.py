@@ -33,12 +33,13 @@ def test_fair_int_anal():
 
 def excl_test_fair_initial():
     from pyfair.datasets import (
-        Ricci, German, Adult, PropublicaRecidivism,
-        PropublicaViolentRecidivism, preprocess)
+        # Ricci, Adult, PropublicaRecidivism,
+        # PropublicaViolentRecidivism,
+        German, preprocess)
     from pyfair.preprocessing_dr import (
         adversarial, transform_X_and_y, transform_unpriv_tag)
     from pyfair.preprocessing_hfm import (
-        adverse_perturb, transform_X_A_and_y)
+        transform_X_A_and_y)  # adverse_perturb,
 
     # dt = Ricci()
     dt = German()

@@ -11,7 +11,7 @@ from pyfair.facil.utils_const import unique_column, DTY_FLT
 
 from pyfair.granite.draw_addtl import (
     single_line_reg_with_distr, multi_lin_reg_without_distr,
-    scatter_with_marginal_distrib, lineplot_with_uncertainty,
+    lineplot_with_uncertainty,  # scatter_with_marginal_distrib,
     line_reg_with_marginal_distr)  # multi_lin_reg_with_distr,
 from pyfair.granite.draw_fancy import (
     multi_boxplot_rect, radar_chart)  # boxplot_rect,
@@ -19,7 +19,7 @@ from pyfair.granite.draw_chart import (
     analogous_confusion_extended)  # ,multiple_scatter_chart)
 
 from pyfair.granite.draw_fancy import (
-    multi_boxplot_rect_revised, tabular_chart,
+    multi_boxplot_rect_revised,  # tabular_chart,
     radar_chart_gather, tabular_chart_gather)
 from pyfair.granite.draw_chart import anal_conf_extended_subplt
 from pyfair.granite.draw_addtl import (
@@ -435,7 +435,7 @@ class PlotA_initial(GraphSetup):
 
     def draw_extended_idv_tim(self, df, tag_X, tag_Ys, figname):
         tim_grp, tim_grp_nonbin = tag_X
-        tim_idv, tim_df, tim_df_pl = tag_Ys
+        tim_idv = tag_Ys[0]  # tim_idv, tim_df, tim_df_pl = tag_Ys
         X = df[tim_grp].values.astype(DTY_FLT)
         Ys = [df[i].values.astype(DTY_FLT) / X for i in [
             tim_grp_nonbin, ] + tim_idv]
@@ -544,8 +544,7 @@ class PlotA_fair_ens(PlotA_initial):
         pass
 
     def schedule_mspaint(self, raw_dframe, figname=''):
-        nb_set, id_set = self.recap_sub_data(
-            raw_dframe, sa_ir=3, sa_r=4)
+        _, id_set = self.recap_sub_data(raw_dframe, sa_ir=3, sa_r=4)
         mk = 'tst'  # flag,mark
         first_incl = verbose = False
         # df_bin = self.obtain_binval_senatt(raw_dframe, id_set, mk)
@@ -627,7 +626,7 @@ class PlotA_fair_ens(PlotA_initial):
         return
 
     def schedule_mspaint_avg(self, raw_dframe, figname=''):
-        nb_set, id_set = self.recap_sub_data(raw_dframe, sa_ir=3, sa_r=4)
+        _, id_set = self.recap_sub_data(raw_dframe, sa_ir=3, sa_r=4)
         mk, first_incl, verbose = 'tst', False, False
         df_nonbin = self.obtain_multival_senatt(
             raw_dframe, id_set, mk, first_incl=first_incl)
@@ -1275,7 +1274,7 @@ class PlotB_fair_ens(PlotA_fair_ens):
         key_A = [tag_X[:8][i] for i in pick]
         key_C = [tag_X[8:16][i] for i in pick]
         key_B_bin = tag_Ys[0][:3] + tag_X[-3:] + tag_Ys[0][-2:]
-        lbl_A = [self._perf_metric[i] for i in pick]
+        # lbl_A = [self._perf_metric[i] for i in pick]
         lbl_C = [self._dal_metric[i] for i in pick]
         lbl_B_bin = annotZs + [r'$\mathbf{df}_\text{prev}$',
                                r'$\hat{\mathbf{df}}_\text{prev}$']
@@ -1331,7 +1330,7 @@ class PlotB_fair_ens(PlotA_fair_ens):
         # pdb.set_trace()
         kws['rotate'] = 45  # Mat_C_A = Mat_C_A[: len(pick)]
         # 'blue','red,green'  # '#3162A1', '#D23B3E', '#F36F3E'  # '#9a0019'
-        kws['cmap_name'] = 'gray' 
+        kws['cmap_name'] = 'gray'
 
         analogous_confusion_extended(
             Mat_C_A[:len(pick)], Mat_B_bin, lbl_C, lbl_B_bin,
@@ -1426,18 +1425,18 @@ class PlotB_fair_ens(PlotA_fair_ens):
         #                         , verbose=False):
         annotZs = GRP_FAIR_COMMON + [r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
         ta, ra = f"{'':<7}", f"{'':>8}"
-        tmp_ext = [r'$\text{DP}^\text{ext}$' + ta,
-                   r'$\text{EOpp}^\text{ext}$' + ta,
-                   r'$\text{PP}^\text{ext}$' + ta, ]
-        tmp_ext_alt = [r'$\text{DP}^\text{alt}$' + ra,
-                       r'$\text{EOpp}^\text{alt}$' + ra,
-                       r'$\text{PP}^\text{alt}$' + ra, ]
-        tmp_ext_avg = [r'$\text{DP}^\text{ext(avg)}$',
-                       r'$\text{EOpp}^\text{ext(avg)}$',
-                       r'$\text{PP}^\text{ext(avg)}$']
-        tmp_ext_alt_avg = [r'$\text{DP}^\text{alt(avg)}$' + ' ',
-                           r'$\text{EOpp}^\text{alt(avg)}$' + ' ',
-                           r'$\text{PP}^\text{alt(avg)}$' + ' ']
+        # tmp_ext = [r'$\text{DP}^\text{ext}$' + ta,
+        #            r'$\text{EOpp}^\text{ext}$' + ta,
+        #            r'$\text{PP}^\text{ext}$' + ta, ]
+        # tmp_ext_alt = [r'$\text{DP}^\text{alt}$' + ra,
+        #                r'$\text{EOpp}^\text{alt}$' + ra,
+        #                r'$\text{PP}^\text{alt}$' + ra, ]
+        # tmp_ext_avg = [r'$\text{DP}^\text{ext(avg)}$',
+        #                r'$\text{EOpp}^\text{ext(avg)}$',
+        #                r'$\text{PP}^\text{ext(avg)}$']
+        # tmp_ext_alt_avg = [r'$\text{DP}^\text{alt(avg)}$' + ' ',
+        #                    r'$\text{EOpp}^\text{alt(avg)}$' + ' ',
+        #                    r'$\text{PP}^\text{alt(avg)}$' + ' ']
         annotZs[0] += ra + f"{'':>3}"
         annotZs[2] += ra + f"{'':>2}"
         annotZs[1] += ra + f"{'':<3}"
@@ -1519,21 +1518,21 @@ class PlotB_fair_ens(PlotA_fair_ens):
         return
 
     def avg_draw_trade_off(self, df, pick, tag_X, tag_Ys, figname, ver_mark=''):
-        labels = ['Original', 'Extended', 'Alternative',
-                  f'Extended{ver_mark}', f'Alternative{ver_mark}']
-        # lbl_dim2 = GRP_FAIR_COMMON + [
-        #     r'$\mathbf{df}_\text{prev}$', r'$\hat{\mathbf{df}}_\text{prev}$']
-        # fgn = figname.replace('_avg', '')
+        # labels = ['Original', 'Extended', 'Alternative',
+        #           f'Extended{ver_mark}', f'Alternative{ver_mark}']
+        # # lbl_dim2 = GRP_FAIR_COMMON + [
+        # #     r'$\mathbf{df}_\text{prev}$', r'$\hat{\mathbf{df}}_\text{prev}$']
+        # # fgn = figname.replace('_avg', '')
 
-        annotZs = GRP_FAIR_COMMON + [r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
+        # # annotZs = GRP_FAIR_COMMON + [r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
         annotY = 'Extended (avg.) GF (multival)'  # 'group fairness (multival)'
-        # tmp_ext = [r'$\text{DP}^\text{ext(avg)}$',
-        #            r'$\text{EOpp}^\text{ext(avg)}$',
-        #            r'$\text{PP}^\text{ext(avg)}$', ]
-        # tmp_ext_alt = [r'$\text{DP}^\text{alt(avg)}$',
-        #                r'$\text{EOpp}^\text{alt(avg)}$',
-        #                r'$\text{PP}^\text{alt(avg)}$', ]
-        tmp_ext = tmp_ext_alt = GRP_FAIR_COMMON
+        # # tmp_ext = [r'$\text{DP}^\text{ext(avg)}$',
+        # #            r'$\text{EOpp}^\text{ext(avg)}$',
+        # #            r'$\text{PP}^\text{ext(avg)}$', ]
+        # # tmp_ext_alt = [r'$\text{DP}^\text{alt(avg)}$',
+        # #                r'$\text{EOpp}^\text{alt(avg)}$',
+        # #                r'$\text{PP}^\text{alt(avg)}$', ]
+        # tmp_ext = tmp_ext_alt = GRP_FAIR_COMMON
 
         tw = {'snspec': 'sty4b', 'palette_X': ['#FED477'] * 3,
               'palette_Y': ['#00a087'] * 9}  # X:'#F4870B'  cde5cd,E6DAc3
@@ -1609,12 +1608,13 @@ class PlotB_fair_ens(PlotA_fair_ens):
     def draw_trade_off(self, df, pick, tag_X, tag_Ys, figname, ver_mark=''):
         annotZs = GRP_FAIR_COMMON + [
             r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
-        tmp_ext = [r'$\text{DP}^\text{ext}$',
-                   r'$\text{EOpp}^\text{ext}$',
-                   r'$\text{PP}^\text{ext}$', ]
-        tmp_ext_alt = [r'$\text{DP}^\text{alt}$',
-                       r'$\text{EOpp}^\text{alt}$',
-                       r'$\text{PP}^\text{alt}$', ]
+        # tmp_ext = [r'$\text{DP}^\text{ext}$',
+        #            r'$\text{EOpp}^\text{ext}$',
+        #            r'$\text{PP}^\text{ext}$', ]
+        # tmp_ext_alt = [r'$\text{DP}^\text{alt}$',
+        #                r'$\text{EOpp}^\text{alt}$',
+        #                r'$\text{PP}^\text{alt}$', ]
+
         # for pk in pick:
         #     annotX = self._perf_metric[pk]
         #     linreg_w_marg_dist_revised(  # tag_X[-2:]+tag_X[-3:-2]
@@ -1640,7 +1640,7 @@ class PlotB_fair_ens(PlotA_fair_ens):
         #         snspec='sty4b', figname=f'{figname}_to{pk}_s3')
         # pdb.set_trace()
         annotY = 'Extended GP (multival)'  # line_reg_with_marginal_distr(
-        tw = {'snspec': 'sty4b', 'subfig': True, 'palette_X': ['#FED477'] * 3, 
+        tw = {'snspec': 'sty4b', 'subfig': True, 'palette_X': ['#FED477'] * 3,
               'palette_Y': ['#501d8a'] + ['#aa3474', '#ee8c7d'] * 4}
         annotZs[3] = 'GEI'
         # linreg_w_marg_dist_revised_subplt(
@@ -1872,9 +1872,9 @@ class PlotB_gather(PlotB_fair_ens):
     def data_gathering(self, raw_df_b, raw_df_c, mk='tst'):
         # first_incl = verbose = False     # mk = 'tst'
         first_incl = False
-        nb_set, id_set = self.recap_sub_data(raw_df_b, sa_ir=3, sa_r=4)
+        _, id_set = self.recap_sub_data(raw_df_b, sa_ir=3, sa_r=4)
         df_b = self.obtain_multival_senatt(raw_df_b, id_set, mk, first_incl)
-        nb_set, id_set = self.recap_sub_data(raw_df_c, sa_ir=11, sa_r=0)
+        _, id_set = self.recap_sub_data(raw_df_c, sa_ir=11, sa_r=0)
         df_c = self.obtain_multival_senatt(raw_df_c, id_set, mk, first_incl)
         df_nonbin = pd.concat([df_b, df_c], axis=0).reset_index(drop=True)
         # df_nonbin = df_b  # pdb.set_trace()
