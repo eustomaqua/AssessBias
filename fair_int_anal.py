@@ -18,14 +18,20 @@ from pyfair.granite.draw_fancy import (
 from pyfair.granite.draw_chart import (
     analogous_confusion_extended)  # ,multiple_scatter_chart)
 
-from pyfair.granite.draw_fancy import (
-    multi_boxplot_rect_revised,  # tabular_chart,
-    radar_chart_gather, tabular_chart_gather)
+# from pyfair.granite.draw_fancy import (
+#     multi_boxplot_rect_revised, tabular_chart,
+#     radar_chart_gather, tabular_chart_gather)
 from pyfair.granite.draw_chart import anal_conf_extended_subplt
-from pyfair.granite.draw_addtl import (
-    linreg_w_marg_dist_revised,  # linreg_w_marg_dist_revised_subpltv1,
-    linreg_w_marg_dist_rev_sup_pv1, linreg_w_marg_dist_rev_sup_pv2,
-    gathering_lin_reg_sup_tim)
+# from pyfair.granite.draw_addtl import (
+#     linreg_w_marg_dist_revised,  # linreg_w_marg_dist_revised_subpltv1,
+#     gathering_lin_reg_sup_tim)
+from pyfair.granite.draw_fancy import multi_boxplot_rect_revised
+from cont_draw import (radar_chart_gather, tabular_chart_gather,
+                       linreg_w_marg_dist_rev_sup_pv1,
+                       linreg_w_marg_dist_rev_sup_pv2,
+                       gathering_lin_reg_sup_tim,
+                       )  # linreg_w_marg_dist_revised)
+# from pyfair.granite.draw_addtl import linreg_w_marg_dist_revised
 
 
 # -----------------------------

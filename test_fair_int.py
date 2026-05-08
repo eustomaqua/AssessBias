@@ -5,7 +5,7 @@ from fair_int_anal import PlotB_fair_ens
 import pdb
 
 
-def excl_test_fair_int_anal():
+def test_fair_int_anal():
     kws = {}
     kws['exp'] = 'KF_exp1b'
     kws['pre'] = 'min_max'
