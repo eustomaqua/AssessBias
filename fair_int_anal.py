@@ -11,7 +11,7 @@ from pyfair.facil.utils_const import unique_column, DTY_FLT
 
 from pyfair.granite.draw_addtl import (
     single_line_reg_with_distr, multi_lin_reg_without_distr,
-    lineplot_with_uncertainty,  # scatter_with_marginal_distrib,
+    # lineplot_with_uncertainty,  # scatter_with_marginal_distrib,
     line_reg_with_marginal_distr)  # multi_lin_reg_with_distr,
 from pyfair.granite.draw_fancy import (
     multi_boxplot_rect, radar_chart)  # boxplot_rect,
@@ -547,6 +547,8 @@ class PlotA_initial(GraphSetup):
 
 class PlotA_fair_ens(PlotA_initial):
     def __init__(self):
+        """PlotA_fair_ens
+        """
         pass
 
     def schedule_mspaint(self, raw_dframe, figname=''):
@@ -1054,8 +1056,9 @@ class PlotA_norm_cls(PlotA_initial):
         pass
 
     def schedule_mspaint(self, raw_dframe, figname=''):
-        nb_set, id_set = self.recap_sub_data(
-            raw_dframe, sa_ir=11, sa_r=0)
+        # nb_set, id_set = self.recap_sub_data(
+        #     raw_dframe, sa_ir=11, sa_r=0)
+        _, id_set = self.recap_sub_data(raw_dframe, sa_ir=11, sa_r=0)
         mk = 'tst'
         first_incl = verbose = False
         df_nonbin = self.obtain_multival_senatt(
@@ -1424,13 +1427,13 @@ class PlotB_fair_ens(PlotA_fair_ens):
             df[key_E[3:-2]].values.astype(DTY_FLT).T],
             lbl_C, [lbl_E[:3], lbl_E[-2:], lbl_E[3:-2]],
             f'{figname}_sep6', cmap_name=kws['cmap_name'],
-             figsize=(7.8, 1.91), key_tit='Individual fairness & HFM')
+            figsize=(7.8, 1.91), key_tit='Individual fairness & HFM')
         return
 
     def avg_draw_incompatible_alt(self, df, tag_X, tag_Ys, figname):
         #                         , verbose=False):
         annotZs = GRP_FAIR_COMMON + [r'GEI ($\alpha$=0.5)', 'Theil', 'DR']
-        ta, ra = f"{'':<7}", f"{'':>8}"
+        ra = f"{'':>8}"  # ta, ra = f"{'':<7}", f"{'':>8}"
         # tmp_ext = [r'$\text{DP}^\text{ext}$' + ta,
         #            r'$\text{EOpp}^\text{ext}$' + ta,
         #            r'$\text{PP}^\text{ext}$' + ta, ]
@@ -1771,7 +1774,7 @@ class PlotB_fair_ens(PlotA_fair_ens):
         return
 
     def schedule_mspaint_avg(self, raw_dframe, figname=''):
-        nb_set, id_set = self.recap_sub_data(raw_dframe, sa_ir=3, sa_r=4)
+        _, id_set = self.recap_sub_data(raw_dframe, sa_ir=3, sa_r=4)
         mk, first_incl, verbose = 'tst', False, False
         df_nonbin = self.obtain_multival_senatt(
             raw_dframe, id_set, mk, first_incl=first_incl)

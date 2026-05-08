@@ -272,6 +272,8 @@ class CompA_sing_learner(ComparisonA_setup):
     def __init__(self, name_cls, nb_cls=1,
                  constraint_type='FPR,FNR',
                  saIndex=tuple(), saValue=tuple()):
+        """CompA_sing_learner
+        """
         self._name_cls = name_cls
         self._nb_cls = nb_cls
         self._constraint = constraint_type
@@ -374,6 +376,8 @@ class CompA_sing_learner(ComparisonA_setup):
 class CompA_fair_ens(CompA_sing_learner):
     def __init__(self, name_cls='DT', nb_cls=7,
                  saIndex=tuple(), saValue=tuple()):
+        """CompA_fair_ens
+        """
         self._name_cls = name_cls  # abbr_cls
         self._nb_cls = nb_cls
         # self._constraint = constraint_type

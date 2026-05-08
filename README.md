@@ -6,18 +6,25 @@
 https://stackoverflow.com/questions/1559424/coverage-py-exclude-files
 https://stackoverflow.com/questions/2386975/no-source-for-code-message-in-coverage-py
 https://coverage.readthedocs.io/en/latest/excluding.html
+
+![Codacy Badge](https://app.codacy.com/project/badge/Grade/94d422566c7540fd90a812dc3670a9f5)(https://app.codacy.com/gh/eustomaqua/AssessBias/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/94d422566c7540fd90a812dc3670a9f5)](https://app.codacy.com/gh/eustomaqua/AssessBias/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 -->
 
-![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+
+
+[![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/Licence-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![arXiv](https://img.shields.io/badge/arXiv-2506.12556-B31B1B.svg)](https://arxiv.org/pdf/2506.12556)
 
 
-Welcome to the AssessBias's documentation. This is to help you reproduce our work from
+Welcome to the **AssessBias**'s documentation. This is to help you reproduce our work from ***Revisiting some misconceptions and limitations in algorithmic fairness***.
 
+<!--
 1. Algorithmic fairness: Not a purely technical but socio-technical property
 2. Do existing fairness measures suffice? Assessing discrimination in algorithmic decision-making
+-->
 
 
 ## Getting started
@@ -68,6 +75,7 @@ To reproduce our empirical results, you may use the [released data](https://gith
 ```shell
 $ # source activate py311
 $ python fair_int_draw.py -exp KF_exp1b
+$ python fair_int_draw.py -exp KF_exp1d
 $ # conda deactivate
 ```
 

@@ -25,6 +25,8 @@ class FairNonbinaryPlotting:
     def __init__(self, trial_type, prep=False, nb_cv=5,
                  ratio=.97, m1=20, m2=8, fix_m2=False, n_e=2,
                  mp_cores=2, nb_cls=1, screen=True, logged=False):
+        """FairNonbinaryPlotting
+        """
         self._dataset = ['ricci', 'german', 'adult', 'ppr', 'ppvr']
         self._ratio = ratio
         self._mp_cores = mp_cores

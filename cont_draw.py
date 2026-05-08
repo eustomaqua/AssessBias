@@ -2,6 +2,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+# from mpl_toolkits.axes_grid1 import ImageGrid
+# from matplotlib.gridspec import GridSpecFromSubplotSpec
 
 from pyfair.facil.utils_const import DTY_FLT, subfig_ind
 from pyfair.facil.draw_prelim import _style_set_axis, _setup_figshow
@@ -116,11 +118,12 @@ def radar_chart_gather(df_set, tag_Xs, annotX, annotY, figname='radar',
     annotX[tt] = annotX[tt] + "\n"  # labels[4] = labels[4] + "\n"
     del tt  # pdb.set_trace()
 
-    num_set, num_clf = len(df_set), len(df_set[0])
-    from mpl_toolkits.axes_grid1 import ImageGrid
-    from matplotlib.gridspec import GridSpecFromSubplotSpec
-    # fig = plt.figure(figsize=(13, 7.4), dpi=300, constrained_layout=True)
-    # outer = fig.add_gridspec(num_set, num_clf)  # ,wspace=.64,hspace=.23) #.35
+    num_clf = len(df_set[0])
+    # # num_set, num_clf = len(df_set), len(df_set[0])
+    # from mpl_toolkits.axes_grid1 import ImageGrid
+    # from matplotlib.gridspec import GridSpecFromSubplotSpec
+    # # fig = plt.figure(figsize=(13, 7.4), dpi=300, constrained_layout=True)
+    # # outer = fig.add_gridspec(num_set, num_clf)  # ,wspace=.64,hspace=.23) #.35
 
     fig = plt.figure(figsize=(14, 7.8), dpi=300, constrained_layout=True)
     _radar_sharey_ver1(fig, df_set, tag_Xs, annotX, annotY, stylish, sharey, entitle)
@@ -265,11 +268,11 @@ def tabular_chart_gather(df_set, tag_Xs, annotX, annotY, data='', algo='',
                          figname='tabular', cumulate=False, panel='y'):
     columns, rows = tag_Xs, annotY[::-1]
     colors = plt.cm.BuPu(np.linspace(0, 0.5, len(rows)))
-    index = np.arange(len(columns)) + 0.3
-    bar_width = 0.4
+    # index = np.arange(len(columns)) + 0.3
+    # bar_width = 0.4
 
     num_set, num_clf = len(data), len(algo)
-    from matplotlib.gridspec import GridSpecFromSubplotSpec
+    # from matplotlib.gridspec import GridSpecFromSubplotSpec
     fig, grid = plt.subplots(num_set, num_clf, constrained_layout=True,
                              figsize=(10.4, 5.7) if panel == 'yp' else (
                                  11.7, 6.4))  # (13,7.6),(14,7.8),(12,7.1)
@@ -430,12 +433,11 @@ def _subtim_afterbody(ax, annots, sci_format_y, _curr_ft):
 def _subtim_sing_lin(ax, X, Y, snspec='sty2',
                      # lbl_X='x', lbl_Y='y', lbl_Z=r'$f(x)=x$'):
                      annots=('X', 'Y', 'Z'), sci_format_y=False):
-    R = Pearson_correlation(X, Y)[0]
-    # R = np.corrcoef(X, Y)[1, 0]
-    key = 'Correlation = %.4f' % R
-    regr = np.polyfit(X, Y, deg=1)
-    estimated = np.polyval(regr, X)
-    Z = sorted(X)
+    # R = Pearson_correlation(X, Y)[0]  # np.corrcoef(X, Y)[1, 0]
+    # key = 'Correlation = %.4f' % R
+    # regr = np.polyfit(X, Y, deg=1)
+    # estimated = np.polyval(regr, X)
+    # Z = sorted(X)
     annotZ = annots[2] if len(annots) > 2 else r'$f(x)=x$'
 
     kw = dict(alpha=1, linewidths=.4,)

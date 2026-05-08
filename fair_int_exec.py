@@ -52,6 +52,8 @@ class FairNonbinaryEmpirical(DataSetup):
                  n_e=3, mp_cores=2, abbr_cls='DT', nb_cls=1,
                  constraint_type='FPR,FNR',
                  screen=True, logged=False):
+        """FairNonbinaryEmpirical
+        """
         super().__init__(data_type)
         self._fix_m2 = fix_m2  # fixed_m2,appt_m2
         self._mp_cores = mp_cores
@@ -256,8 +258,8 @@ class FairNonbinaryEmpirical(DataSetup):
             tmp_cls, '', handling_info[
                 'perturbation_tim_elapsed']], [
             '', self._prep, '', '', '', '',
-             'mp#core ={}'.format(self._mp_cores
-                                  ),  # 'sen-att', '', ''],
+            'mp#core ={}'.format(self._mp_cores
+                                 ),  # 'sen-att', '', ''],
             '', f'abbr_cls,nb_cls={self._nb_cls}',
             '', 'perturbation'],
             sen_att, self._dataset.privileged_vals,

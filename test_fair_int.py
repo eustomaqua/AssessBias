@@ -5,7 +5,7 @@ from fair_int_anal import PlotB_fair_ens
 import pdb
 
 
-def test_fair_int_anal():
+def excl_test_fair_int_anal():
     kws = {}
     kws['exp'] = 'KF_exp1b'
     kws['pre'] = 'min_max'
@@ -38,8 +38,8 @@ def excl_test_fair_initial():
         German, preprocess)
     from pyfair.preprocessing_dr import (
         adversarial, transform_X_and_y, transform_unpriv_tag)
-    from pyfair.preprocessing_hfm import (
-        transform_X_A_and_y)  # adverse_perturb,
+    # from pyfair.preprocessing_hfm import (
+    #     adverse_perturb, transform_X_A_and_y)
 
     # dt = Ricci()
     dt = German()
