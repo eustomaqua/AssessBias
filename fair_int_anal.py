@@ -1708,9 +1708,8 @@ class PlotB_fair_ens(PlotA_fair_ens):
         return
 
     def schedule_mspaint(self, raw_dframe, figname=''):
-        nb_set, id_set = self.recap_sub_data(
-            raw_dframe, sa_ir=3, sa_r=4)
-        mk = 'tst'
+        _, id_set = self.recap_sub_data(raw_dframe, sa_ir=3, sa_r=4)
+        mk = 'tst'  # nb_set,id_set=self.recap_sub_data(
         first_incl = verbose = False
         df_nonbin = self.obtain_multival_senatt(
             raw_dframe, id_set, mk, first_incl=first_incl)

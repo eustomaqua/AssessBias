@@ -12,9 +12,10 @@ import time
 from pyfair.facil.utils_saver import elegant_print
 from pyfair.facil.utils_timer import elegant_durat, elegant_dated
 
-from fair_int_anal import (PlotA_fair_ens, PlotA_norm_cls)
+# from fair_int_anal import (PlotA_fair_ens, PlotA_norm_cls)
 from fair_int_anal import PlotB_fair_ens as PlotA_fair_ens
 from fair_int_anal import PlotB_gather   # PlotB_norm_cls as A
+from fair_int_anal import PlotA_norm_cls
 
 
 # =============================
@@ -25,8 +26,8 @@ class FairNonbinaryPlotting:
     def __init__(self, trial_type, prep=False, nb_cv=5,
                  ratio=.97, m1=20, m2=8, fix_m2=False, n_e=2,
                  mp_cores=2, nb_cls=1, screen=True, logged=False):
-        """FairNonbinaryPlotting
-        """
+        """Fair Non-binary Plotting"""
+
         self._dataset = ['ricci', 'german', 'adult', 'ppr', 'ppvr']
         self._ratio = ratio
         self._mp_cores = mp_cores

@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 
 from pyfair.facil.utils_const import DTY_FLT, subfig_ind
 from pyfair.facil.draw_prelim import _style_set_axis, _setup_figshow
-from pyfair.marble.draw_hypos import Pearson_correlation
 from pyfair.granite.draw_graph import _sns_line_err_bars
+# from pyfair.marble.draw_hypos import Pearson_correlation
 
 from pyfair.granite.draw_fancy import _radar_X_revised
 from pyfair.granite.draw_addtl import (
@@ -118,8 +118,7 @@ def radar_chart_gather(df_set, tag_Xs, annotX, annotY, figname='radar',
     annotX[tt] = annotX[tt] + "\n"  # labels[4] = labels[4] + "\n"
     del tt  # pdb.set_trace()
 
-    num_clf = len(df_set[0])
-    # # num_set, num_clf = len(df_set), len(df_set[0])
+    # num_set, num_clf = len(df_set), len(df_set[0])
     # from mpl_toolkits.axes_grid1 import ImageGrid
     # from matplotlib.gridspec import GridSpecFromSubplotSpec
     # # fig = plt.figure(figsize=(13, 7.4), dpi=300, constrained_layout=True)
@@ -136,7 +135,7 @@ def radar_chart_gather(df_set, tag_Xs, annotX, annotY, figname='radar',
 
 def _tabular_panel(grid, ir, ic, num_clf, data, algo, panel, pad=2):
     # grid[ir, ic].set_xticks([])
-    # im = "Panel ({}) {:14s}".format(im, ) 
+    # im = "Panel ({}) {:14s}".format(im, )
     im = "Panel ({})".format(chr(ir * num_clf + ic + 65).lower())
     if panel == 'y':
         grid[ir, ic].set_title(algo[ic] if ir == 0 else "", pad=pad)

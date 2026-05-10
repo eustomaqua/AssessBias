@@ -12,9 +12,8 @@ https://coverage.readthedocs.io/en/latest/excluding.html
 -->
 
 
-
-[![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
+![CircleCI](https://img.shields.io/circleci/build/github/eustomaqua/AssessBias/master)
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/Licence-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![arXiv](https://img.shields.io/badge/arXiv-2506.12556-B31B1B.svg)](https://arxiv.org/pdf/2506.12556)
 
